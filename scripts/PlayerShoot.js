@@ -17,4 +17,22 @@ class PlayerShoot{
     move(){
         this.posY -= this.speed;
     }
+
+    checkCollision(enemy){
+        let shootPrecision = .3;
+        let enemyPrecision = .9;
+
+        let collision = collideRectRect(
+            this.posX,
+            this.posY,
+            this.imgWidth * shootPrecision,
+            this.imgHeight * shootPrecision,
+            enemy.posX,
+            enemy.posY,
+            enemy.imgWidth * enemyPrecision,
+            enemy.imgHeight * enemyPrecision
+        );
+
+        return collision;
+    }
 }

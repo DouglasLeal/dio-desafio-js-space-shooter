@@ -38,6 +38,7 @@ function draw() {
 
     controlShoots();
     controlEnemies();
+    controlExplosions();
     movePlayer();
 }
 
@@ -61,14 +62,35 @@ function movePlayer() {
     }
 }
 
-function controlShoots() {
-    shoots.forEach(s => {
-        s.show();
+function controlExplosions(){
+    explosions.forEach(explosion => {
+        explosion.show();
+        let finished = explosion.animate();
+        if(finished){
+            explosions.splice(explosions.indexOf(explosion), 1);
+        }
+    });
+}
 
-        if (s.posY < -s.imgHeight) {
-            shoots.splice(shoots.indexOf(s), 1);
+function controlShoots() {
+    shoots.forEach(shoot => {
+        shoot.show();
+
+        if (shoot.posY < -shoot.imgHeight) {
+            shoots.splice(shoots.indexOf(shoot), 1);
             player.addShoots();
         }
+
+        enemies.forEach(enemy => {
+            if(enemy != null){
+                if(shoot.checkCollision(enemy)){
+                    explosions.push(new Explosion(explosionSprites, enemy.posX, enemy.posY, 149, 149))
+                    enemies.splice(enemies.indexOf(enemy), 1);
+                    shoots.splice(shoots.indexOf(shoot), 1);
+                    player.addShoots();
+                }
+            }
+        });
     });
 }
 
