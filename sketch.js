@@ -12,6 +12,12 @@ let shoots = [];
 let enemies = [];
 let explosions = [];
 
+let btn = null;
+let message = null;
+
+let started = false;
+let isGameOver = false;
+
 function preload() {
     backgroundSprite = loadImage('./assets/background.png');
     playerSprite = loadImage('./assets/player.png');
@@ -31,10 +37,15 @@ function setup() {
     player = new Player(playerSprite, 99, 75, 10);
     enemyGenerator = new EnemyGenerator(enemySprite);
 
+    btn = buttonGenerator("Iniciar");
+    message = startMessage();
 }
 
 function draw() {
     background.show();
+
+    if(isGameOver && started) return gameOver();
+    if(!started) return;
 
     controlShoots();
     controlEnemies();
@@ -105,6 +116,7 @@ function controlEnemies() {
 
             if (enemy.posY > height) {
                 enemies.splice(enemies.indexOf(enemy), 1);
+                isGameOver = true;
             }
 
             if (player.checkCollision(enemy)) {
@@ -115,4 +127,53 @@ function controlEnemies() {
             }
         }
     });
+}
+//------------------------------
+function startMessage(){
+    let div = createDiv();
+    div.addClass('message');
+    div.position(0, 200);
+    let p1 = createP('Não deixe os inimigos invadirem o seu planeta.');
+    let p2 = createP('Use a SETA ESQUERDA e SETA DIREITA para movimentar a nave.');
+    let p3 = createP('Aperte ESPAÇO para atirar.');
+    p2.class('line');
+    p3.class('line');
+    div.child(p1);
+    div.child(p2);
+    div.child(p3);
+    return div;
+}
+
+function gameOverMessage(){
+    let div = createDiv();
+    div.addClass('message');
+    div.position(0, 200);
+    let p = createP('Fim de Jogo!!!');
+    div.child(p);
+    return div;
+}
+
+function buttonGenerator(text){
+    let btn = createButton(text);
+    btn.position(0, 0);
+    btn.class('btn');
+    btn.mousePressed(startGame);
+    return btn;
+}
+
+function startGame(){
+    isGameOver = false;
+    started = true;
+    enemies = [];
+    btn.remove();
+    message.remove();
+}
+
+function gameOver(){
+    console.log("gameOver");
+    started = false;
+    player.reset();
+    shoots = [];
+    message = gameOverMessage();
+    btn = buttonGenerator("Reiniciar");
 }

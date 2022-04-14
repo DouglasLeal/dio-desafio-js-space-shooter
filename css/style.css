@@ -6,3 +6,36 @@
 canvas{
     display: block;
 }
+
+.message{
+    padding: 50px 0;
+    text-align: center;
+    width: 100%;
+    font-size: 32px;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+.message .line{
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.btn{
+    box-sizing: border-box;
+    width: 250px;
+    margin-top: 500px;
+    margin-left: calc(50% - 125px);
+
+    background-color: transparent;
+    color: #fff;
+    font-size: 56px;
+    border-radius: 25px;
+    border: 3px solid #fff;
+    transition: background-color .5s, color .5s;
+}
+
+.btn:hover{
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}

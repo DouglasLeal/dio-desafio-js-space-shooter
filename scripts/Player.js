@@ -3,7 +3,8 @@ class Player{
         this.sprite = sprite;
         this.imgWidth = imgWidth;
         this.imgHeight = imgHeight;
-        this.speed = speed;
+        this.speed = width >= 1920 ? speed * 2 : speed;
+        
 
         this.initialX = width/2 - imgWidth/2;
         this.initialY = height - imgHeight - 10;
@@ -57,5 +58,11 @@ class Player{
         );
 
         return collision;
+    }
+
+    reset(){
+        this.shoots = 3;
+        this.posX = this.initialX;
+        this.posY = this.initialY;
     }
 }
