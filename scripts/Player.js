@@ -27,4 +27,17 @@ class Player{
             this.posX = width - this.imgWidth;
         }
     }
+
+    shoot(){
+        if(this.shoots <= 0) return false;
+
+        this.shoots--;
+        return true;
+    }
+
+    addShoots(){
+        if(this.shoots < 3){
+            this.shoots++;
+        }
+    }
 }
