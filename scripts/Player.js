@@ -40,4 +40,22 @@ class Player{
             this.shoots++;
         }
     }
+
+    checkCollision(enemy){
+        let shootPrecision = 1;
+        let enemyPrecision = 1;
+
+        let collision = collideRectRect(
+            this.posX,
+            this.posY,
+            this.imgWidth * shootPrecision,
+            this.imgHeight * shootPrecision,
+            enemy.posX,
+            enemy.posY,
+            enemy.imgWidth * enemyPrecision,
+            enemy.imgHeight * enemyPrecision
+        );
+
+        return collision;
+    }
 }
